@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/liu_32x32.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/liu_16x16.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logossssvg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="一.关于数据库操作1.创建数据库​    create database 数据库名称;2.删除数据库1drop database  数据库名称;3.查看数据库1show databases;4.进入数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL的基础使用">
+<meta property="og:url" content="http://yoursite.com/2019/10/31/MySQL的基础使用/index.html">
+<meta property="og:site_name" content="Liu的博客">
+<meta property="og:description" content="一.关于数据库操作1.创建数据库​    create database 数据库名称;2.删除数据库1drop database  数据库名称;3.查看数据库1show databases;4.进入数据库">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-07T13:26:23.826Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL的基础使用">
+<meta name="twitter:description" content="一.关于数据库操作1.创建数据库​    create database 数据库名称;2.删除数据库1drop database  数据库名称;3.查看数据库1show databases;4.进入数据库">
+  <link rel="canonical" href="http://yoursite.com/2019/10/31/MySQL的基础使用/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>MySQL的基础使用 | Liu的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liu的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-archive"></i>标签<span class="badge">0</span></a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-archive"></i>分类<span class="badge">0</span></a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">5</span></a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/31/MySQL的基础使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liu">
+      <meta itemprop="description" content="Rainbow after wind and rain">
+      <meta itemprop="image" content="/images/liu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            MySQL的基础使用
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-31 21:10:20" itemprop="dateCreated datePublished" datetime="2019-10-31T21:10:20+08:00">2019-10-31</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-07 21:26:23" itemprop="dateModified" datetime="2019-11-07T21:26:23+08:00">2019-11-07</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>1k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>1 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="一-关于数据库操作"><a href="#一-关于数据库操作" class="headerlink" title="一.关于数据库操作"></a>一.关于数据库操作</h2><h4 id="1-创建数据库"><a href="#1-创建数据库" class="headerlink" title="1.创建数据库"></a>1.创建数据库</h4><p>​    create database 数据库名称;</p><h4 id="2-删除数据库"><a href="#2-删除数据库" class="headerlink" title="2.删除数据库"></a>2.删除数据库</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">database</span>  数据库名称;</span><br></pre></td></tr></table></figure><h4 id="3-查看数据库"><a href="#3-查看数据库" class="headerlink" title="3.查看数据库"></a>3.查看数据库</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">databases</span>;</span><br></pre></td></tr></table></figure><h4 id="4-进入数据库"><a href="#4-进入数据库" class="headerlink" title="4.进入数据库"></a>4.进入数据库</h4><a id="more"></a>
+
+
+
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span>  数据库名称;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-查看创建数据库的详细信息"><a href="#5-查看创建数据库的详细信息" class="headerlink" title="5.查看创建数据库的详细信息"></a>5.查看创建数据库的详细信息</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">databases</span> 数据库名称;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二-关于表的基本操作"><a href="#二-关于表的基本操作" class="headerlink" title="二.关于表的基本操作"></a>二.关于表的基本操作</h2><h4 id="1-显示数据库中的表"><a href="#1-显示数据库中的表" class="headerlink" title="1.显示数据库中的表"></a>1.显示数据库中的表</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">tables</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-创建数据表"><a href="#2-创建数据表" class="headerlink" title="2.创建数据表"></a>2.创建数据表</h4><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table  表名称（字段<span class="number">1</span> 类型<span class="number">1</span>，字段<span class="number">2</span> 类型<span class="number">2</span>）;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-显示表的字段"><a href="#3-显示表的字段" class="headerlink" title="3.显示表的字段"></a>3.显示表的字段</h4><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc  表名称<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-删除数据表"><a href="#4-删除数据表" class="headerlink" title="4.删除数据表"></a>4.删除数据表</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span>  表名称;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三-修改表结构的操作"><a href="#三-修改表结构的操作" class="headerlink" title="三.修改表结构的操作"></a>三.修改表结构的操作</h2><h4 id="1-修改字段类型"><a href="#1-修改字段类型" class="headerlink" title="1.修改字段类型"></a>1.修改字段类型</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">modify</span> 列名 数据类型;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-修改表名"><a href="#2-修改表名" class="headerlink" title="2.修改表名"></a>2.修改表名</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 旧表名 <span class="keyword">rename</span> [<span class="keyword">to</span>] 新表名;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-修改列名"><a href="#3-修改列名" class="headerlink" title="3.修改列名"></a>3.修改列名</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">change</span> 旧列名 新列名 新数据类型;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-添加表的字段"><a href="#4-添加表的字段" class="headerlink" title="4.添加表的字段"></a>4.添加表的字段</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span>  表名称  <span class="keyword">add</span> 字段 字段类型;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-添加字段到指定位置"><a href="#5-添加字段到指定位置" class="headerlink" title="5.添加字段到指定位置"></a>5.添加字段到指定位置</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名称  <span class="keyword">add</span>  字段  字段类型  <span class="keyword">after</span> 字段;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-删除表字段"><a href="#6-删除表字段" class="headerlink" title="6.删除表字段"></a>6.删除表字段</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">drop</span> 列名;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四-基本操作"><a href="#四-基本操作" class="headerlink" title="四.基本操作"></a>四.基本操作</h2><h4 id="1-一次添加一行数据"><a href="#1-一次添加一行数据" class="headerlink" title="1.一次添加一行数据"></a>1.一次添加一行数据</h4><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">insert <span class="built_in">int</span>o 表名 (字段<span class="number">1</span>,字段<span class="number">2</span>,字段<span class="number">3</span>,...)</span><br><span class="line">values (值<span class="number">1</span>,值<span class="number">2</span>,值<span class="number">3</span>,...);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-对一行所有字段增加数据"><a href="#2-对一行所有字段增加数据" class="headerlink" title="2.对一行所有字段增加数据"></a>2.对一行所有字段增加数据</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> 表名称  <span class="keyword">values</span>（值<span class="number">1</span>，值<span class="number">2</span>，……）;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-一次添加多行数据"><a href="#3-一次添加多行数据" class="headerlink" title="3.一次添加多行数据"></a>3.一次添加多行数据</h4><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">insert <span class="built_in">int</span>o 表名 (字段<span class="number">1</span>,字段<span class="number">2</span>,字段<span class="number">3</span>,...)</span><br><span class="line"> values (值<span class="number">1</span>,值<span class="number">2</span>,值<span class="number">3</span>,...),</span><br><span class="line">  values (值<span class="number">1</span>,值<span class="number">2</span>,值<span class="number">3</span>,...),</span><br><span class="line">   values (值<span class="number">1</span>,值<span class="number">2</span>,值<span class="number">3</span>,...);</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-对指定字段增加数据"><a href="#4-对指定字段增加数据" class="headerlink" title="4.对指定字段增加数据"></a>4.对指定字段增加数据</h4><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert <span class="built_in">int</span>o 表名称 （字段<span class="number">1</span>，字段<span class="number">2</span>，……） values （值<span class="number">1</span>，值<span class="number">2</span>，……）;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-删除表中指定数据"><a href="#5-删除表中指定数据" class="headerlink" title="5.删除表中指定数据"></a>5.删除表中指定数据</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> 表名称 <span class="keyword">where</span>条件表达式;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-删除表中全部数据"><a href="#6-删除表中全部数据" class="headerlink" title="6.删除表中全部数据"></a>6.删除表中全部数据</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> 表名称;</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-修改表中现存数据"><a href="#7-修改表中现存数据" class="headerlink" title="7.修改表中现存数据"></a>7.修改表中现存数据</h4><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update 表名称 <span class="keyword">set</span> 字段<span class="number">1</span>=值<span class="number">1</span>,字段<span class="number">2</span>=值<span class="number">2</span> where条件;</span><br></pre></td></tr></table></figure>
+
+<h2 id="五-四种全连接"><a href="#五-四种全连接" class="headerlink" title="五. 四种全连接"></a>五. 四种全连接</h2><h4 id="1-内连接"><a href="#1-内连接" class="headerlink" title="1.内连接"></a>1.内连接</h4><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT 列名 <span class="number">1</span>,列名 <span class="number">2</span>… FROM 表 <span class="number">1</span>，表 <span class="number">2</span> WHERE 条件;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-另一种写法"><a href="#2-另一种写法" class="headerlink" title="2.另一种写法"></a>2.另一种写法</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 列名 <span class="number">1</span>,列名 <span class="number">2</span>… <span class="keyword">FROM</span> 表 <span class="number">1</span> <span class="keyword">INNER</span> <span class="keyword">JOIN</span> 表 <span class="number">2</span> <span class="keyword">ON</span> 条件;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-左连接"><a href="#3-左连接" class="headerlink" title="3.左连接"></a>3.左连接</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 列名 <span class="number">1</span>,列名 <span class="number">2</span>… <span class="keyword">FROM</span> 表 <span class="number">1</span> <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> 表 <span class="number">2</span> <span class="keyword">ON</span> 条件;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-右连接"><a href="#4-右连接" class="headerlink" title="4.右连接"></a>4.右连接</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 列名 <span class="number">1</span>,列名 <span class="number">2</span>… <span class="keyword">FROM</span> 表 <span class="number">1</span> <span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> 表 <span class="number">2</span> <span class="keyword">ON</span> 条件;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <div>
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+
+  
+</div>
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/14/Java1-8章总结/" rel="next" title="Java1~8章总结">
+                  <i class="fa fa-chevron-left"></i> Java1~8章总结
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/11/04/JSP介绍/" rel="prev" title="JSP介绍">
+                  JSP介绍 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1399534395&auto=0&height=66"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1359156131&auto=0&height=66"></iframe>
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-关于数据库操作"><span class="nav-number">1.</span> <span class="nav-text">一.关于数据库操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-创建数据库"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.创建数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-删除数据库"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.删除数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-查看数据库"><span class="nav-number">1.0.3.</span> <span class="nav-text">3.查看数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-进入数据库"><span class="nav-number">1.0.4.</span> <span class="nav-text">4.进入数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-查看创建数据库的详细信息"><span class="nav-number">1.0.5.</span> <span class="nav-text">5.查看创建数据库的详细信息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-关于表的基本操作"><span class="nav-number">2.</span> <span class="nav-text">二.关于表的基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-显示数据库中的表"><span class="nav-number">2.0.1.</span> <span class="nav-text">1.显示数据库中的表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-创建数据表"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.创建数据表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-显示表的字段"><span class="nav-number">2.0.3.</span> <span class="nav-text">3.显示表的字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-删除数据表"><span class="nav-number">2.0.4.</span> <span class="nav-text">4.删除数据表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-修改表结构的操作"><span class="nav-number">3.</span> <span class="nav-text">三.修改表结构的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-修改字段类型"><span class="nav-number">3.0.1.</span> <span class="nav-text">1.修改字段类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-修改表名"><span class="nav-number">3.0.2.</span> <span class="nav-text">2.修改表名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-修改列名"><span class="nav-number">3.0.3.</span> <span class="nav-text">3.修改列名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-添加表的字段"><span class="nav-number">3.0.4.</span> <span class="nav-text">4.添加表的字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-添加字段到指定位置"><span class="nav-number">3.0.5.</span> <span class="nav-text">5.添加字段到指定位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-删除表字段"><span class="nav-number">3.0.6.</span> <span class="nav-text">6.删除表字段</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-基本操作"><span class="nav-number">4.</span> <span class="nav-text">四.基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-一次添加一行数据"><span class="nav-number">4.0.1.</span> <span class="nav-text">1.一次添加一行数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-对一行所有字段增加数据"><span class="nav-number">4.0.2.</span> <span class="nav-text">2.对一行所有字段增加数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-一次添加多行数据"><span class="nav-number">4.0.3.</span> <span class="nav-text">3.一次添加多行数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-对指定字段增加数据"><span class="nav-number">4.0.4.</span> <span class="nav-text">4.对指定字段增加数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-删除表中指定数据"><span class="nav-number">4.0.5.</span> <span class="nav-text">5.删除表中指定数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-删除表中全部数据"><span class="nav-number">4.0.6.</span> <span class="nav-text">6.删除表中全部数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-修改表中现存数据"><span class="nav-number">4.0.7.</span> <span class="nav-text">7.修改表中现存数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-四种全连接"><span class="nav-number">5.</span> <span class="nav-text">五. 四种全连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-内连接"><span class="nav-number">5.0.1.</span> <span class="nav-text">1.内连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-另一种写法"><span class="nav-number">5.0.2.</span> <span class="nav-text">2.另一种写法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-左连接"><span class="nav-number">5.0.3.</span> <span class="nav-text">3.左连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-右连接"><span class="nav-number">5.0.4.</span> <span class="nav-text">4.右连接</span></a></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/liu.jpg"
+      alt="Liu">
+  <p class="site-author-name" itemprop="name">Liu</p>
+  <div class="site-description" itemprop="description">Rainbow after wind and rain</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/yourname" title="GitHub &rarr; https://github.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:LQL1026@gmail.com" title="E-Mail &rarr; mailto:LQL1026@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-liu"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">13k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">12 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.1
+  </div>
+
+
+  <% } %>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-miku"},"display":{"position":"right","width":140,"height":260},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+<!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
