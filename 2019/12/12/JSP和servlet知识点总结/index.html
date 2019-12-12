@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/liu_32x32.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/liu_16x16.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logossssvg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="第一章- 动态网页开发基础三大领域：B/S (网站)C/S(QQ)嵌入式开发(苹果,安卓手机)动态网页/静态网页:所需技术:htm,css，数据库,javascript,xml,一门高级语言(java,C#,PHP)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSP和servlet知识点总结">
+<meta property="og:url" content="http://yoursite.com/2019/12/12/JSP和servlet知识点总结/index.html">
+<meta property="og:site_name" content="Liu的博客">
+<meta property="og:description" content="第一章- 动态网页开发基础三大领域：B/S (网站)C/S(QQ)嵌入式开发(苹果,安卓手机)动态网页/静态网页:所需技术:htm,css，数据库,javascript,xml,一门高级语言(java,C#,PHP)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618210051396.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618210554904.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618210652007.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618210741781.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618210756188.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618210922633.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618210950143.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618211100681.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618211151494.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618211216697.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618211245772.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618211315729.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618211344307.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618211451574.png">
+<meta property="og:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618211523697.png">
+<meta property="og:updated_time" content="2019-12-12T08:07:34.787Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JSP和servlet知识点总结">
+<meta name="twitter:description" content="第一章- 动态网页开发基础三大领域：B/S (网站)C/S(QQ)嵌入式开发(苹果,安卓手机)动态网页/静态网页:所需技术:htm,css，数据库,javascript,xml,一门高级语言(java,C#,PHP)">
+<meta name="twitter:image" content="d:%5Chexo%5Cblog%5Cphone%5C20160618210051396.png">
+  <link rel="canonical" href="http://yoursite.com/2019/12/12/JSP和servlet知识点总结/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>JSP和servlet知识点总结 | Liu的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liu的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-archive"></i>标签<span class="badge">0</span></a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-archive"></i>分类<span class="badge">0</span></a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">9</span></a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/12/JSP和servlet知识点总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liu">
+      <meta itemprop="description" content="Rainbow after wind and rain">
+      <meta itemprop="image" content="/images/liu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            JSP和servlet知识点总结
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-12 15:52:46 / 修改时间：16:07:34" itemprop="dateCreated datePublished" datetime="2019-12-12T15:52:46+08:00">2019-12-12</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>15k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>14 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="第一章-动态网页开发基础"><a href="#第一章-动态网页开发基础" class="headerlink" title="第一章- 动态网页开发基础"></a>第一章- 动态网页开发基础</h2><p>三大领域：B/S (网站)C/S(QQ)嵌入式开发(苹果,安卓手机)</p><p>动态网页/静态网页:</p><p>所需技术:htm,css，数据库,javascript,xml,一门高级语言(java,C#,PHP)</p><a id="more"></a>
+
+
+<p>主流的动态网页技术:jsp/asp.net/php</p>
+<p>Web服务器一般指网站服务器，是指驻留于因特网上某种类型计算机的程序，可以向浏览器等Web客户端提供文档，[1]  也可以放置网站文件，让全世界浏览；可以放置数据文件，让全世界下载。目前最主流的三个Web服务器是Apache Nginx IIS(Microsoft的Internet信息服务器（Internet Information Services，IIS)</p>
+<p>常见的web服务器:</p>
+<ol>
+<li><p>weblogic   oracle 公司</p>
+</li>
+<li><p>websphere  IBM公司  </p>
+</li>
+<li><p>Jboss 免费的开源的</p>
+</li>
+<li><p>tomcat 小型的</p>
+</li>
+</ol>
+<p>http: 特点 【断开式】 每一次都是全新的</p>
+<p>1.JSP为什么出现？</p>
+<p> 在开发Web网站时,发现使用servlet做界面比较麻烦,于是又有了一种新技术JSP</p>
+<p>2.Jsp是什么?</p>
+<ol start="5">
+<li><p>jsp运行在服务器</p>
+</li>
+<li><p>jsp(java server page)</p>
+</li>
+<li><p>jsp的基础是servlet(相当于给servlet做个包装)</p>
+</li>
+<li><p>jsp是综合技术jsp=java代码+html+css+javascript+jsp标签</p>
+</li>
+<li><p>jsp无需配置，如果你修改了jsp代码，不需要重新reload  web应用</p>
+</li>
+<li><p>jsp访问：<a href="http://IP:8080/web应用名/jsp路径（jsp路径从WebRoot开始算）" target="_blank" rel="noopener">http://IP:8080/web应用名/jsp路径（jsp路径从WebRoot开始算）</a></p>
+<p><img src="D:%5Chexo%5Cblog%5Cphone%5C20160618210051396.png" alt></p>
+</li>
+</ol>
+<p><strong>3.JSP是编译执行，PHP为解释执行</strong></p>
+<p>计算机语言：机器语言，汇编语言，高级语言</p>
+<p> 机器语言 0和1</p>
+<p>汇编语言 汇编语言的实质和机器语言是相同的，都是直接对硬件操作，只不过指令采用了英文缩写的标识符，更容易识别和记忆</p>
+<p>高级语言 高级语言主要是相对于汇编语言而言，它并不是特指某一种具体的语言，而是包括了很多编程语言</p>
+<p>高级语言所编制的程序不能直接被计算机识别，必须经过转换才能被执行，按转换方式可将它们分为两类:解释类 编译类</p>
+<p>解释类：执行方式类似于我们日常生活中的“同声翻译”，应用程序源代码一边由相应语言的解释器“翻译”成目标代码(机器语言)，一边执行，因此效率比较低，而且不能生成可独立执行的可执行文件，应用程序不能脱离其解释器，但这种方式比较灵活，可以动态地调整、修改应用程序。</p>
+<p>编译类：编译是指在应用源程序执行之前，就将程序源代码“翻译”成目标代码(机器语言)，因此其目标程序可以脱离其语言环境独立执行，使用比较方便、效率较高。但应用程序一旦需要修改，必须先修改源代码，再重新编译生成新的目标文件(＊.OBJ)才能执行，只有目标文件而没有源代码，修改很不方便</p>
+<p>二，B/S架构与C/S架构</p>
+<ol>
+<li><p>基于B/S架构的web应用程序由于不再受到安装客户端的限制，访问极其简便，因此越来越多地被企业采用。 在此需要特别说明的是B/S架构的出现不是对C/S架构的否定,而是对C/S架构的一种变化或者改进</p>
+</li>
+<li><p>B/S架构工作原理：</p>
+</li>
+</ol>
+<p>浏览器接受用户的输入</p>
+<p>浏览器向服务器端发送请求</p>
+<p>数据处理</p>
+<p>发送响应</p>
+<p>三，URL(统一资源定位符)的组成</p>
+<ol>
+<li>HTTP协议:     服务器域名或IP     端口号    路径</li>
+</ol>
+<p>举例：<a href="http://www.sohu.com/news/index.html" target="_blank" rel="noopener">http://www.sohu.com/news/index.html</a></p>
+<p>默认的http端口号为80，</p>
+<p>端口号与网络协议相关</p>
+<p>四，Tomcat的获取与安装</p>
+<ol>
+<li><p>Tomcat安装完毕后要设置TOMCAT_HOME环境变量设置方法与java环境变量步骤类似,设置值为Tomcat的安装目录</p>
+</li>
+<li><p>Tomcat启动与停止</p>
+</li>
+</ol>
+<p>通过服务器实现启动或停止</p>
+<p>通过控制面板&gt;管理工具&gt;服务&gt;鼠标右击Apache Tomcat选择启动停止</p>
+<p>通过Tomcat菜单中的Monitor Tomcat工具启动或停止Tomcat服务</p>
+<p>通过所有程序&gt;Apache Tomcat XX&gt;Monitor Tomcat&gt;General选择启动或停止</p>
+<p>五，Tomcat目录结构</p>
+<p>/bin              存放各种平台下用于启动和停止Tomcat的脚本文件</p>
+<p>/conf            存放Tomcat服务器的各种配置文件，其中最重要的是server.xml</p>
+<p>/lib              存放Tomcat服务器所需的各种JAR文件</p>
+<p>/logs            存放Tomcat的日志文件</p>
+<p>/temp           Tomcat运行时用于存放临时文件</p>
+<p>/webapps        Web应用的发布目录</p>
+<p>/work           Tomcat把由JSP生成的Servlet放于此目录下</p>
+<p>端口号的配置:</p>
+<pre><code>Tomcat目录下&gt;conf&gt;server.xml  打开后找到&lt;Connector&gt;节点然后修改port属性</code></pre><p><a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a></p>
+<p>   Web应用的目录结构，web应用是位于tomcat/webapps目录下的一个子目录</p>
+<pre><code>/    web的根目录存放各类jsp，html
+
+/WEB-INF     存放应用程序所使用的各种资源包括web.xml
+
+/WEB-INF/classes  存放class文件
+
+/WEB-INF/lib      存放JAR文件</code></pre><p>配置web应用起始页：</p>
+<p>修改web.xml文件中的以下两个标签，注意标签名</p>
+  <welcome-file-list>
+
+<p><welcome-file>index.jsp</welcome-file></p>
+  </welcome-file-list>
+
+
+
+<h2 id="第二章-JSP的组成"><a href="#第二章-JSP的组成" class="headerlink" title="第二章-JSP的组成"></a>第二章-JSP的组成</h2><p>JSP的执行过程： 翻译阶段</p>
+<pre><code>编译阶段</code></pre><p>   执行阶段</p>
+<p><img src="D:%5Chexo%5Cblog%5Cphone%5C20160618210554904.png" alt></p>
+<p>JSP页面组成：静态内容 ，指令，表达式 ，小脚本 ，声明 ，注释</p>
+<p>JSP中的注释：HTML注释，JSP注释标记，</p>
+<p>JSP指令元素page</p>
+<pre><code>Language属性
+
+Import属性
+
+contentType属性</code></pre><p>举例 &lt;%@ page language=”java” import=”java.util.<em>,java.text.</em>“  contentType=”text/html; charset=utf-8” pageEncoding=”utf-8”%&gt;</p>
+<p>jsp表达式：其语法为&lt;%=  java表达式%&gt;,容器会先计算表达式的值或者变量的值，然后将结果输出的页面</p>
+<p>Jsp声明 可以定义变量和方法，其中变量的值会一直保持，页面刷新不会重置该变量的值</p>
+<p>定义在小脚本里面的变量，每次刷新页面会重置该变量的值</p>
+<p>jsp页面中的代码执行加载顺序</p>
+<p>java是在生成页面时在服务器端运行的代码，jsp在服务器的servlet里运行，而javascript和html都是页面生成完在浏览器端运行的代码。所以加载执行顺序是是java&gt;jsp&gt;js。</p>
+<h2 id="第三章-jsp数据交互"><a href="#第三章-jsp数据交互" class="headerlink" title="第三章-jsp数据交互"></a>第三章-jsp数据交互</h2><p>JSP内置对象：request，response，out，application，session</p>
+<p>Request对象专门用于处理客户端请求</p>
+<p>Request方法：String  getParamenter（根据页面表单组件名称获取页面提交数据）</p>
+<pre><code>String[] getParamenterValues（获取一个页面表单组件对应多个值时的用户请求数据）
+
+Void setCharacterEncoding（解决中文乱码）
+
+Request.getRequsestDispacher(path)（返回一个javax.servlet.RequestDispacher对象，该对象用forward方法用于转发请求）</code></pre><p>一， JSP内置对象response</p>
+<ol>
+<li><p>response对象与request对象相对应，它用于响应客户端输出信息</p>
+</li>
+<li><p>response对象几个常用方法</p>
+<p>addCookie（Cookie cookie） 在客户端添加Cookie</p>
+</li>
+</ol>
+<p>setContentType（String type） 设置HTTP响应的contentType类型</p>
+<p> setCharacterEncoding（String chareet）设置响应所采用的字符编码类型</p>
+<p> 重点：（ sendRedirect（String path） 将请求重新定位到一个不同的URL上）</p>
+<p>二， 转发与重定向</p>
+<p>1什么是转发：</p>
+<p>   使用request的getRequestDispatcher（）方法即可实现</p>
+<p>   转发就是将客户端发送请求道服务器，Web服务器内部的方法在容器内完成处理和请求和转发，然后将目标资源发送给浏览器，不管服务器内部如何处理，浏览器都只提出了一个请求，因而客户端的URL地址不会发生改变,因此可以共享request范围内的数据</p>
+<p>举例:request.getRequestDispatcher(“welcome.jsp”).forward(request, response)</p>
+<p>转发的作用：在多个页面交互的过程中实现请求术数据的共享。</p>
+<p>2什么是重定向</p>
+<p>   使用response对象的sendRedirect（）方法。</p>
+<p>   重定向的执行结果就是客户端重新向服务器请求一个地址链接，由于是发送新的请求因而上次请求中的数据将丢失这种行为就是重定向</p>
+<p>response.sendRedirect(“welcome.jsp”)]</p>
+<h4 id="重定向和转发的区别"><a href="#重定向和转发的区别" class="headerlink" title="重定向和转发的区别"></a><strong>重定向和转发的区别</strong></h4><p><strong>区别一：</strong></p>
+<p>　　<strong>重定向时浏览器上的网址改变</strong></p>
+<p>　　<strong>转发是浏览器上的网址不变</strong></p>
+<p><strong>区别二：</strong></p>
+<p>　　<strong>重定向实际上产生了两次请求</strong></p>
+<p><strong>转发只有一次请求</strong></p>
+<p><strong>重定向：</strong></p>
+<p>　　<strong>发送请求 –&gt;服务器运行–&gt;响应请求，返回给浏览器一个新的地址与响应码–&gt;浏览器根据响应码，判定该响应为重定向，自动发送一个新的请求给服务器，请求地址为之前返回的地址–&gt;服务器运行–&gt;响应请求给浏览器</strong></p>
+<p><strong>转发：</strong></p>
+<p>　　<strong>发送请求 –&gt;服务器运行–&gt;进行请求的重新设置，例如通过request.setAttribute(name,value)–&gt;根据转发的地址，获取该地址的网页–&gt;响应请求给浏览器</strong></p>
+<p><strong>区别三：</strong></p>
+<p>　　<strong>重定向时的网址可以是任何网址</strong></p>
+<p>　　<strong>转发的网址必须是本站点的网址</strong></p>
+<p><strong>详解：</strong></p>
+<p>　　<strong>重定向：以前的request中存放的变量全部失效，并进入一个新的request作用域。</strong></p>
+<p><strong>转发：以前的request中存放的变量不会失效，就像把两个页面拼到了一起</strong></p>
+<p>三， Jsp访问数据库</p>
+<p>1． JDBC链接数据库   贾琏欲执事(红楼梦)</p>
+<p>贾—》导包(jar   import java.sql.*;)</p>
+<p>琏à 连接字符串 (IP,数据库名称,用户名,密码)连接对象</p>
+<p>欲—》sql语句</p>
+<p>执—》增删改查</p>
+<p>事—》关闭</p>
+<p>王熙凤(女强人，强势 管家)—》贾琏(满有才)</p>
+<p>（1） 加载JDBC驱动。</p>
+<p>（2） 与数据库建立链接。</p>
+<p>（3） 发送SQL语句，并得到返回结果。</p>
+<p>（4） 处理返回结果。</p>
+<p>（5） 数据库访问结束后，进行资源释放。</p>
+<p>使用JSP访问数据库，就是将JDBC访问数据库代码嵌入到JSP页面中，实现步骤与java相同。</p>
+<h2 id="第四章-状态管理"><a href="#第四章-状态管理" class="headerlink" title="第四章-状态管理"></a>第四章-状态管理</h2><p>一． cookie</p>
+<p>（一） 在jsp中使用cookie</p>
+<ol>
+<li>使用page指令</li>
+</ol>
+<p>&lt;%@page  import=”javax.servlet.http.cookie”%&gt;</p>
+<ol start="2">
+<li>创建cookie对象</li>
+</ol>
+<p>Cookie  newCookie=new Cookie(String key,Object value);</p>
+<ol start="3">
+<li>写入cookie</li>
+</ol>
+<p>Response.addCookie(newCookie);</p>
+<ol start="4">
+<li>读取cookie</li>
+</ol>
+<p>Cookie[] cookies=request.getCookies();</p>
+<p>(二)  cookie对象的几个方法60<em>60</em>24</p>
+<p>  void    setMaxAge(int expiry)  设置有效期，单位秒</p>
+<p>  void    setValue(String value)</p>
+<p>  String  getName()</p>
+<p>  String  getValue()</p>
+<p>  Int     getMaxAge()  获取有效期，单位秒</p>
+<p> <img src="D:%5Chexo%5Cblog%5Cphone%5C20160618210652007.png" alt></p>
+<p>二． session</p>
+<p>(一)  session对象的几个常用方法</p>
+<p>void   setAttribute(String key,Object value);</p>
+<p>Object  getAttribute(String key)</p>
+<p>void  invalidate()   设置session对象失效</p>
+<p>String   getId()  获取session  id</p>
+<p>void  setMaxInactiveInterval(int interval)   设置session的非活动时间</p>
+<p>int  getMaxInactiveInterval()   获取session的有效非活动时间</p>
+<p><img src="D:%5Chexo%5Cblog%5Cphone%5C20160618210741781.png" alt> </p>
+<p> <img src="D:%5Chexo%5Cblog%5Cphone%5C20160618210756188.png" alt></p>
+<p>(二) session和cookie的区别</p>
+<ol>
+<li><p>session是在服务器端保存用户信息，cookie是在客户端保存用户信息</p>
+</li>
+<li><p>session中保存的是对象,cookie中保存的是字符串</p>
+</li>
+<li><p>session对象随会话结束而关闭，cookie可以长久保存在客户端</p>
+</li>
+<li><p>cookie通常用于保存不重要的用户信息，重要的信息使用session保存</p>
+</li>
+</ol>
+<p>session和cookie</p>
+<p>默认情况下，浏览器同一个进程的不同页面共享临时Cookie，这个Cookie保存的SessionID成为服务器端识别Session的依据</p>
+<p>Seesion对象有效期：一次会话（浏览器关闭可能导致会话结束）怎么判断会话结束：IE进程结束,重新打开或换个浏览器,否则在桌面上重新打开一个浏览器是指一个seesion对象</p>
+<p>类似于生活中 当登录某个网站 关闭了改窗口 重新 打开时 依旧有效  </p>
+<p>Seesion是保存在服务器中但是通过Cookie来实现</p>
+<ol>
+<li><p>重定向是客户端跳转,共有二次请求   转发是服务器端跳转 只有最开始打开页面的一次请求</p>
+<p>对Cookie的赋值只有等下一次浏览请求时才能生效</p>
+</li>
+</ol>
+<p>1.page代表JSP这个实例本身（用的少）</p>
+<p>2.PageContext(域对象,存放数据只能在当前页面有效)</p>
+<p>3.session(域对象,存放数据在一次会话有效)</p>
+<p>4.applaction(域对象 存放数据在整个Web应用运行周期有效)</p>
+<p>5.cookie是由服务器端生成，发送给客户端浏览器的，浏览器会将其保存在某个目录下的文本文件中。</p>
+<p>通过cookie，可以实现浏览器与服务器之间的数据传递。</p>
+<p>就WEB开发来说，一个会话就是用户通过浏览器与服务器之间的一次通话，它包含浏览器与服务器之间的多次请求、响应过程。</p>
+<p>session与cookie均能实现信息的保存，但是二者的区别如下。</p>
+<p>session是在服务器端保存用户信息，cookie是在客户端保存用户信息。</p>
+<p>session中保存的是对象，cookie保存的是字符串。</p>
+<p>session对象随会话结束而关闭，cookie可以长期保存在客户端。</p>
+<p>cookie通常用于保存不重要的用户信息。我们可以降低代码的冗余问题，并且修改起来也更加方便</p>
+<p>三.include指令：&lt;%@  include file=”应用文件路径”%&gt;</p>
+<p>JSP的四种范围，分别为page、request、session、application</p>
+<p>application：<br>全局作用范围，整个应用程序共享，就是在部署文件中的同一个webApp共享，生命周期为：应用程序启动到停止。</p>
+<p>session：<br>会话作用域，当用户首次访问时，产生一个新的会话，以后服务器就可以记住这个会话状态。生命周期：会话超时，或者服务器端强制使会话失效。</p>
+<p>request：<br>请求作用域，就是客户端的一次请求。</p>
+<p>page：<br>一个JSP页面。</p>
+<p>以上作用范围使越来越小， request和page的生命周期都是短暂的，他们之间的区别就是：一个request可以包含多个page页(include，forward以及filte</p>
+<p>四.application</p>
+<p>   （一）常用方法：</p>
+<p>  void  serAttribute(String key,Object value)</p>
+<p>  Object  getAttribute(String key)  </p>
+<p>  String  getRealPath(String path)  返回相对路径的真实路径</p>
+<p>五．对象的范围</p>
+<p>（一）page范围：单一jsp页面的范围</p>
+<pre><code>pageContext.setAttribute(“属性名”,属性值)</code></pre><p>（二） request范围:</p>
+<p>request.setAttribute(“属性名”,属性值)</p>
+<p>（三） session范围,可以跨越多个请求</p>
+<p>session.setAttribute(“属性名”,属性值)</p>
+<p>（四） application范围，全局有效</p>
+<p>application.setAttribute(“属性名”,属性值)</p>
+<p>六．jsp的常用内置对象：out,request,response,session,application</p>
+<h2 id="第五章-JSP应用优化"><a href="#第五章-JSP应用优化" class="headerlink" title="第五章-JSP应用优化"></a>第五章-JSP应用优化</h2><p>一.JNDI</p>
+<p>  JNDI的全称是java命名与目录接口（Java Naming and Directory Interface）,通过指定一个资源名称，将该名称与某一资源或服务相关联。 </p>
+<p>二.数据库连接池</p>
+<p> 数据库连接池以数据源的方式体现，在Tomcat中配置数据源的步骤如下。</p>
+<p>（1） 配置context.xml文件。</p>
+<p>&lt;Resource  name=”jdbc/news” auth=”Container”  type=”javax.slq.DataSource”</p>
+<p>maxActive=”100”  maxIdle=”30” maxWait=”10000”  username=”SYSTEM”</p>
+<p>password=”whhp”  driverClassName=”oracle.jdbc.driver.OracleDriver”</p>
+<p>url=”jdbc:oracle:thin:@localhost:1521:orcl” /&gt;</p>
+<p>（2） 配置web.xml文件。</p>
+<web-app>
+
+<pre><code>&lt;resource-ref&gt;</code></pre><p><description>news DataSource</description></p>
+<p><res-ref-name>jdbc/news</res-ref-name></p>
+<p><res-type>javax.sql.DataSource</res-type></p>
+<p><res-auth>Container</res-auth></p>
+
+
+</web-app>
+
+<p>（3） 添加驱动，将数据库驱动的jar文件复制到Tomcat安装目录下的lib目录中。</p>
+<p>（4） 进行代码编写，使用lookup( )方法获得数据源对象。</p>
+<p>Context   ctx=new  InitialContext( );</p>
+<p>DataSource  ds=(DataSource)ctx.looup(“java:comp/env/jdbc/news”);</p>
+<p>Connection  con=ds.getConnection( );</p>
+<p>三.JavaBean</p>
+<p>（1）JavaBean是Java中可以跨平台的重用组件。</p>
+<p>（2）JavaBean在应用中主要负责封装数据和封装业务处理。</p>
+<p>（3）JavaBean的定义要遵循一定的规则，体现在以下几个方面:</p>
+<pre><code>1.公有类，并提供无参的公有构造方法.</code></pre><p> 2.属性私有。</p>
+<pre><code>3.具有公有的访问属性珠getter和setter方法。</code></pre><h2 id="第六章-jsp开发业务应用"><a href="#第六章-jsp开发业务应用" class="headerlink" title="第六章 jsp开发业务应用"></a>第六章 jsp开发业务应用</h2><p>分页</p>
+<p>分页就是显示数据，能够按照指定格式显示，布局清晰，不受信息数量限制。</p>
+<p>目前的分页方式有多种，一种是将所有查询结果保存在session对象或集合中，翻页的时候从session或集合取出一页所需的数据显示。这种方法有两个主要的缺点：一是用户看到的可能是过期数据；二是如果量非常大，查询一次结果集会耗费很长时间，并且存储的数据也会占用大量内存，效率明显下降。</p>
+<p>用SmartUpload组件实现文件上传</p>
+<p>SmartUpload组件式一个实现文件上传的免费组件，虽然已不再提供更新，但由于使用简单方便依然被非常广泛地使用。</p>
+<p>使用SmartUpload组件具有以下几个特点。</p>
+<p>使用简单：SmartUpload组件可以方便地      到JSP文件中，在JSP文件中编写少量代码即可完成文件的上传和下载功能，十分方便</p>
+<p>能够全程控制上传内容：使用SmartUpload组件提供的对象及操作方法，可以获得全部上传文件的信息，包括文件名称，类型，大小等，方便操作。</p>
+<p>能够对上传文件的大小，类型进行控制：为了避免在上传过程中出现异常数据，在Smartupload组件中，专门提供了相应的方法用于限制不符合要求的文件数据。</p>
+<p>SmartUpload组件的常用方法</p>
+<p>如果想项目中使用SmartUpload组件</p>
+<p>语法格式如下：</p>
+<p>&lt;% page import=”jcom.jspsmart.upload.*” %</p>
+<p>SmartUpload组件的应用</p>
+<p>&lt;% page import=”com.jspsmart.upload.*” %&gt;</p>
+<p>&lt;%</p>
+<p>SmartUpload su =new SmartUpload();</p>
+<p>//初始化SmartUpload对象</p>
+<p>Su.initialize(pageContext);</p>
+<p>Try{</p>
+<p>Su.upload();</p>
+<p>} catch(Exception e){</p>
+<p>e.printSackTrace();</p>
+<p>out.println(“你选择的文件上传失败！”);</p>
+<p>}</p>
+<p>//得到单个上传文件的信息</p>
+<p>Com.jspsmart.upload.File file=su.getFiles().getFile(0);</p>
+<p>//设置文件在服务器的保存位置</p>
+<p>String filepath=”upload\”;</p>
+<p>Filepath+=file.getFileName();</p>
+<p>//文件另存为</p>
+<p>File.saveAs(filepath,smartUpload.SAVE_VIRTUAL);</p>
+<p>%&gt;</p>
+<h2 id="第八章-JSTL和EL"><a href="#第八章-JSTL和EL" class="headerlink" title="第八章-JSTL和EL"></a>第八章-JSTL和EL</h2><p>EL表达式</p>
+<p>作用:快速定位到作用域中的变量及其属性。</p>
+<p>特点:1.自动转换类型。</p>
+<pre><code>2.使用简单</code></pre><p>语法: ${EL表达式}</p>
+<p>操作符:</p>
+<p>.操作符:   可以获取对象的某个属性值(例:${employee.computer})</p>
+<p>[]操作符:  既可以获取对象的某个属性值，也可以获取数组型对象的某个下标的值(例:${employee[“computer”]}, ${list[0]})</p>
+<p>EL隐式对象</p>
+<p>作用域访问对象:pageScope,requestScope,sessionScope,applicationScope。与page,request,session,application内置函数用法一致，可以访问作用域内设置的函数。(例requestScope.name)</p>
+<p>参数访问对象:param,paramValues。可以访问对应标签的name属性值和JSTL中定义的变量。(例:${param.name}  ${paramValues.habits})</p>
+<p>JSP隐式对象:pageContext提供对页面信息和JSP内置对象的访问</p>
+<p>[注：若查找时不指定作用域范围，则会照pageScope－requestScope―sessionScope―applicationScope顺序查找]</p>
+<p><img src="D:%5Chexo%5Cblog%5Cphone%5C20160618210922633.png" alt></p>
+<p>JSTL标准标签库</p>
+<p>作用:可实现对页面中的逻辑控制</p>
+<p>[注：使用前要导入核心标签库:</p>
+<p>&lt;%@ taglib uri=”<a href="http://java.sun.com/jsp/jstl/core”" target="_blank" rel="noopener">http://java.sun.com/jsp/jstl/core”</a>  prefix=”c” %&gt;   ]</p>
+<p>通用标签</p>
+<p>1.定义变量或重新赋值</p>
+<p>&lt;c:set var=”变量名” value=”值” scope=”范围”/&gt;</p>
+<pre><code>&lt;c:set value=”值” target=”目标对象” property=”对象属性名” /&gt;</code></pre><ol start="2">
+<li>输出内容</li>
+</ol>
+<p>&lt;c:out value=”值” default=”为空时显示的默认值” /&gt;</p>
+<p>3.移除变量</p>
+<p>&lt;c:remove var=”变量名” scope=”范围” /&gt;</p>
+<p>条件标签</p>
+<p>&lt;c:if test=”判断条件” var=”变量名” scope=”范围”&gt;</p>
+<p>内容…</p>
+<p></p>
+<p><img src="D:%5Chexo%5Cblog%5Cphone%5C20160618210950143.png" alt> </p>
+<p>举例&lt;c:set var=”isLogin” value=”${not empty sessionScope.userId}”/&gt;</p>
+<p>&lt;c:if test=”${not login}”&gt;</p>
+<p>…登录表单</p>
+
+
+<p></p>
+<p>迭代标签</p>
+<p>&lt;c:forEach var=”当前成员引用名” items=”集合” varStatus=”属性名” </p>
+<p>begin=”开始位置，默认为0”</p>
+<p> end=”结束位置”</p>
+<p>step=”递增量，默认为1”&gt;</p>
+<p></p>
+<p>varStatus属性值:</p>
+<p>current 当前迭代项</p>
+<p>index索引</p>
+<p>count 迭代计数</p>
+<p>first 是否为第一次迭代</p>
+<p>last 是否为最后一迭代</p>
+<p>begin/end/step 标签的开始/结束/步长值</p>
+<p> <img src="D:%5Chexo%5Cblog%5Cphone%5C20160618211100681.png" alt></p>
+<p><strong><!-- 循环输出商品信息 --></strong></p>
+<p><strong>&lt;c:forEach var=”product” items=”${requestScope.products}” varStatus=”status”&gt;</strong></p>
+<p><strong><!-- 如果是偶数行，为该行换背景颜色 --></strong></p>
+<pre><code>&lt;tr &lt;c:if test=&quot;${status.index % 2 == 1 }&quot;&gt;style=&quot;background-color:rgb(219,241,212);&quot;&lt;/c:if&gt;&gt;
+
+    &lt;td&gt;${product.name }&lt;/td&gt;
+
+    &lt;td&gt;${product.area }&lt;/td&gt;
+
+    &lt;td&gt;${product.price }&lt;/td&gt;
+
+&lt;/tr&gt;</code></pre><p><strong>&lt;/c:forEach</strong>&gt;</p>
+<p>逻辑运算符:</p>
+<p>&amp;&amp; and</p>
+<p>|| or</p>
+<p>! not</p>
+<p>关系运算符:</p>
+<p>!= ne</p>
+<p>== eq</p>
+<p>〉 gt</p>
+<p>&lt;        lt</p>
+<blockquote>
+<p>= ge</p>
+</blockquote>
+<p>&lt;= le</p>
+<p>空:empty</p>
+<h2 id="第十一章-Servlet基础"><a href="#第十一章-Servlet基础" class="headerlink" title="第十一章-Servlet基础"></a>第十一章-Servlet基础</h2><p>1.servlet</p>
+<p>1.1 servlet  ==&gt;Java类</p>
+<p>1.2 该java程序要遵守servlet开发规范（怎么遵守？通过 继承servlet接口）</p>
+<p>1.3 servlet 是运行在服务器上的</p>
+<p>1.4 servlet是jsp的基础</p>
+<p>1.5 tomcat 3个功能： jsp容器  Web服务器   Servlet容器</p>
+<p>3.servlet生命周期</p>
+<p> 3.1当用户第一次访问 servlet时，tomcat会帮忙把servlet对象创造出来（只有一个servlet对象）</p>
+<p> 3.2 然后调用init()方法 （只执行一次）</p>
+<p>3.3以多线程的方式来处理客服端的请求  (调用了service()方法)</p>
+<p>3.4 service()会自动根据 客服端来调用 doGet()或doPost()</p>
+<p>3.5  servlet退出服务 （正常关闭才会调用,比如 关闭tomcat或更改.class文件 ，直接X掉web（浏览器）不会调用service()）</p>
+<p>二。servlet表单验证</p>
+<p>1.创建web应用程序</p>
+<p>2.在jsp文件中编写表单</p>
+<p>!– action提交的文件名与web.xml中标签<url-pattern>的名字一致–&gt;</url-pattern></p>
+<form action="kevin">
+
+<p>username:</p>
+<input type="text" name="username">
+
+<br>
+
+<p>password:</p>
+<input type="password" name="password">
+
+<br>
+
+<input type="submit" value="submit">
+
+</form>
+
+<p>3.编写 servlet (Java类)LoginServlet(类名)</p>
+<p>在类中获取表单的相关参数,并通过输出流输出</p>
+<p>String username = req.getParameter(“username”);</p>
+<pre><code>String password = req.getParameter(&quot;password&quot;);
+
+req.setCharacterEncoding(&quot;GBK&quot;);  //输出转换为中文
+
+resp.setContentType(&quot;text/htmll;charset=GBK&quot;);//设置输出为中文
+
+PrintWriter out = resp.getWriter();
+
+out.println(&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Login message&lt;/title&gt;&lt;/head&gt;&quot;);
+
+out.println(&quot;&lt;body&gt;&quot;);
+
+out.println(&quot;username: &quot;+username);
+
+out.println(&quot; password: &quot;+password);
+
+out.println(&quot;&lt;/body&gt;&quot;);
+
+out.println(&quot;&lt;/html&gt;&quot;);
+
+out.flush();</code></pre><p>out.close();</p>
+<p>4.在web项目的web.xml中添加信息</p>
+  <servlet>
+
+<p>​      </p>
+<pre><code>&lt;servlet-name&gt;L&lt;/servlet-name&gt;</code></pre><p>​      </p>
+<pre><code>&lt;servlet-class&gt;LoginServlet&lt;/servlet-class&gt;</code></pre> </servlet>
+
+
+
+
+
+<servlet-mapping>
+
+<p>​     </p>
+<pre><code>&lt;servlet-name&gt;L&lt;/servlet-name&gt;</code></pre><p>​      </p>
+<pre><code>&lt;url-pattern&gt;/kevin &lt;/url-pattern&gt;</code></pre></servlet-mapping>
+
+<p>5.发布项目 ，启动tomcat</p>
+<p>6.在网页中输入地址</p>
+<p><a href="http://localhost:8080/jspch1101/index.jsp，输入用户名和密码点提交后会跳转到servlet页面" target="_blank" rel="noopener">http://localhost:8080/jspch1101/index.jsp，输入用户名和密码点提交后会跳转到servlet页面</a></p>
+<p>Servlet是一个符合特定规范的java程序，在服务器端运行，处理客户端请求并作出响应。</p>
+<p> <img src="D:%5Chexo%5Cblog%5Cphone%5C20160618211151494.png" alt></p>
+<p>一、在调用Servlet时，首先要在程序中导入Servlet所需的包。</p>
+<p>   1.impoet java.io.*;</p>
+<p>   2.import javax.servlet.*;</p>
+<p>   3.import javax.servlet.http.*;</p>
+<p>二、创建用于Web应用时Servlet继承自HttpServlet类。</p>
+<p>三、实现doGet()或者doPost()方法。</p>
+<p> <img src="D:%5Chexo%5Cblog%5Cphone%5C20160618211216697.png" alt></p>
+<p>四、Servlet的生命周期</p>
+<ol>
+<li><p>加载和实例化  (Servlet容器根据Servlet类的位置加载Servlet类，成功加载后，由容器创建</p>
+<p>Servlet的实例)</p>
+</li>
+<li><p>初始化 (init()方法只能被调用一次)</p>
+</li>
+<li><p>服务 (调用Servlet的service()方法处理客户端请求)</p>
+</li>
+<li><p>销毁 (销毁实例之前调用destroy()方法)</p>
+<p><img src="D:%5Chexo%5Cblog%5Cphone%5C20160618211245772.png" alt></p>
+</li>
+</ol>
+<p>五、Servlet的编译和部署</p>
+<p>编译产生的class文件放入web应用的WEB-INF/classes目录下</p>
+<p>文件夹层次与包一致</p>
+<p>例如 org.jbit.servlet.HelloServlet的class文件全路径为</p>
+<p>WEB-INF/classes/org/jbit/servlet/HelloServlet.class</p>
+<p> <img src="D:%5Chexo%5Cblog%5Cphone%5C20160618211315729.png" alt></p>
+<p>   1.web.xml文件的配置</p>
+<web-app>
+
+<pre><code>&lt;servlet&gt;
+
+   &lt;servlet-name&gt;TServlet&lt;/servlet-name&gt;
+
+   &lt;servlet-class&gt;ff.TServlet&lt;/servlet-class&gt;</code></pre><p>  <init-param> //获得初始化参数</init-param></p>
+<p>   <param-name>initParam</param-name></p>
+<p>   <param-value>Hello Servlet</param-value></p>
+  
+
+<pre><code>&lt;/servlet&gt;
+
+
+
+
+&lt;servlet-mapping&gt;
+
+    &lt;servlet-name&gt;TServlet&lt;/servlet-name&gt;
+
+    &lt;url-pattern&gt;/TServlet&lt;/url-pattern&gt;
+
+&lt;/servlet-mapping&gt;
+
+&lt;context-param&gt; //获得上下文参数</code></pre><p>   <param-name>contextParam</param-name></p>
+<p>   <param-value>Hello Servlet</param-value></p>
+<pre><code>&lt;/context-param&gt;</code></pre></web-app>
+
+<p><img src="D:%5Chexo%5Cblog%5Cphone%5C20160618211344307.png" alt></p>
+<p><strong>对于GenericServlet类中的init()和init(ServletConfig config)</strong><br>在开发中我们是使用GenericServlet的子类HttpServlet的，而HttpServlet继承了GenericServlet中<br>的init()和init(ServletConfig config)方法，而在init(ServletConfig config)中会调用init()的，<br>而且系统会在init(ServletConfig config)方法中执行下面语句：<br>public void init(ServletConfig config){<br>this.config = config;//this.config为GenericServlet类的config<br>init();<br>}<br>其实在父类的有参init方法中会隐式的调用无参的init的方法，仅此而已，没什么难的，初始化时永远都调用的是有参的init的方法。</p>
+<p>在GenericServlet中,从servlet接口带来的init(ServletConfig config)对它进行重写时,如果忘了调用super.init(config)时,就会出现空指针异常,为了解决这样的</p>
+<p>情况,GenericServlet中于是有了一个无参的init()方法,推荐大家重写init方法时,</p>
+<p>重写无参的init()方法.</p>
+<p>(第一种init()方法是Servlet接口中init()方法的实现。这种方法中，首先将ServletConfig对象保存在一个transient实例变量中，然后调用第二种不带参数的init()方法。</p>
+<p>通常我们在编写集成自GenericServlet的Servlet类时，只需重写第一种不带参数的init()方法就可以了。如果覆盖了第一种init()方法，那么应该在子类的该方法中，包含一句super.init(config)代码调用。) </p>
+<p>web.xml文件中Servlet映射路径<url-pattern></url-pattern></p>
+<p>对于如下的一些映射关系:</p>
+<p>• Servlet1 映射到 /abc/*</p>
+<p>• Servlet2 映射到 /*</p>
+<p>• Servlet3 映射到 /abc</p>
+<p>• Servlet4 映射到 *.do</p>
+<p>注意: *.do这种形式优先级别最低</p>
+<p><load-on-startup>-1</load-on-startup>、</p>
+<p>· load-on-startup标记容器是否在启动的时候实例化并调用其init()方法的优先级。</p>
+<p>· 它的值表示servlet应该被载入的顺序</p>
+<p>· 当值为0或者大于0时，表示容器在应用启动时就加载并初始化这个servlet；</p>
+<p>· 如果值小于0或未指定时，则表示只有在第一次请求的容器才在该servlet调用初始化函数</p>
+<p>· 正值越小，servlet的优先级越高，应用启动时就越先加载。</p>
+<p>· 值相同时，容器就会自己选择顺序来加载。</p>
+<h2 id="第十二章-Ajax"><a href="#第十二章-Ajax" class="headerlink" title="第十二章 - Ajax"></a>第十二章 - Ajax</h2><p>一、 什么是Ajax</p>
+<p>Ajax是几个单词首字母的缩写：Asynchronous(异步的) JavaScript And Xml。Ajax并不是一种全新的技术，而是整合了几种现在的技术：JavaScript、XML和CSS。主要是JavaScript，我们通过JavaScript的XMLHttpRequest对象完成发送请求到服务器并获得返回结果的任务，然后使用JavaScript更新局部的网页，异步指的是，JavaScript脚本发送请求后并不是一直等着服务器的响应数据。XML一般用于请求数据和响应数据的封装，CSS用于美化页面样式。</p>
+<p>二、 XMLHttpRequest</p>
+<p>1、 XMLHttpRequest的常用方法</p>
+<p>Open(method,URL,async):  建立于服务器的连接，method参数指定请求的HTTP方法;URL参数指定请求的地址;async参数指定是否使用异步请求，其值为true或false。</p>
+<p>Send(conetent):  发送请求，content参数指定请求的参数。</p>
+<p>SetRequestHeader(header,value):  设置请求的头信息。</p>
+<p>2、 XMLHttpRequest的常用属性</p>
+<p>Onreadystatechange:  指定XMLHttpRequest对象的回调函数。</p>
+<p>ReadyState:  XMLHttpRequest的状态信息</p>
+<p>  0 表示已经创建一个对象，但还没初始化</p>
+<p>  1 表示对象开始发送信息</p>
+<p>  2 表示对象的请求发送完成</p>
+<p>  3 对象开始读取响应</p>
+<p>  4 对象读取响应结束</p>
+<p><img src="D:%5Chexo%5Cblog%5Cphone%5C20160618211451574.png" alt></p>
+<pre><code>Status HTTP的状态码，仅当ReadyState的值为3或4时，status属性才能使用
+
+  200 服务器响应正常
+
+  400 无法找到请求的资源
+
+  403 没有访问权限
+
+  404 访问的资源不存在
+
+  500 服务器内部错误</code></pre><p> <img src="D:%5Chexo%5Cblog%5Cphone%5C20160618211523697.png" alt></p>
+<pre><code>ResponseText:  获得响应的文本信息
+
+ResponseXML:  获得响应的XML文档对象</code></pre><p>三、 使用Ajax技术实现异步的步骤</p>
+<p>1、 创建XMLHttpRequest对象。</p>
+<p>2、 通过XMLHttpReuqest对象设置请求信息。</p>
+<p>3、 向服务器发送请求。</p>
+<p>4、 创建回调函数，当XMLHttpRequest对象状态改变时，根据响应状态动态更新页面。</p>
+<p>四、 Ajax的工作过程</p>
+<p>1、 通过XMLHttpRquest对象向服务器发送信息。</p>
+<p>2、 使用XMLHttpRequets对象解析服务器响应数据</p>
+<p>3、 通过JavaScript脚本动态更新页面</p>
+<p>举例</p>
+<p><strong>function doAjax(){</strong></p>
+<p><strong>createXMLHttpRequest();</strong></p>
+<p><strong>var name = document.getElementById(“uname”).value;</strong></p>
+<p><strong>var pwd = document.getElementById(“upwd”).value;</strong></p>
+<p><strong>if(XMLHttp!=null){</strong></p>
+<p><strong>var url =”LoginServlet?uname=”+name+”&amp;upwd=”+pwd；</strong> </p>
+<p><strong>XMLHttp.open(“POST”,url,true);</strong></p>
+<p><strong>XMLHttp.setRequestHeader(“Content-Type”,</strong></p>
+<p><strong>“application/x-www-form-urlencoded;”);</strong></p>
+<p><strong>XMLHttp.onreadystatechange=processRequest;</strong></p>
+<p><strong>XMLHttp.send(null);</strong></p>
+<p><strong>}else{</strong></p>
+<p><strong>alert(“不能创建XMLHttpRequest对象实例”)</strong></p>
+<p><strong>}</strong></p>
+<p><strong>}</strong></p>
+<hr>
+<p><strong>function processRequest() {</strong></p>
+<p><strong>var messdiv = document.getElementById(“mess”)；</strong></p>
+<p><strong>if (xmlhttp.readyState == 4)</strong></p>
+<p><strong>if (xmlhttp.status == 200) {</strong></p>
+<p><strong>//responseText表示请求完成后，返回的字符串信息 if (xmlhttp.responseText == “false”)</strong></p>
+<p><strong>messdiv.innerHTML = “用户名可以使用”;else</strong></p>
+<p><strong>messdiv.innerHTML = “用户名已被使用”; } else {</strong></p>
+<p><strong>alert(“请求处理返回的数据有错误”);</strong></p>
+<p><strong>}</strong></p>
+<p><strong>}</strong></p>
+<p><strong>}</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+  
+    ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+
+  
+</div>
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/11/14/Vue-js介绍/" rel="next" title="Vue.js介绍">
+                  <i class="fa fa-chevron-left"></i> Vue.js介绍
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1399534395&auto=0&height=66"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1359156131&auto=0&height=66"></iframe>
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一章-动态网页开发基础"><span class="nav-number">1.</span> <span class="nav-text">第一章- 动态网页开发基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二章-JSP的组成"><span class="nav-number">2.</span> <span class="nav-text">第二章-JSP的组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三章-jsp数据交互"><span class="nav-number">3.</span> <span class="nav-text">第三章-jsp数据交互</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重定向和转发的区别"><span class="nav-number">3.0.1.</span> <span class="nav-text">重定向和转发的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四章-状态管理"><span class="nav-number">4.</span> <span class="nav-text">第四章-状态管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五章-JSP应用优化"><span class="nav-number">5.</span> <span class="nav-text">第五章-JSP应用优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第六章-jsp开发业务应用"><span class="nav-number">6.</span> <span class="nav-text">第六章 jsp开发业务应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第八章-JSTL和EL"><span class="nav-number">7.</span> <span class="nav-text">第八章-JSTL和EL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十一章-Servlet基础"><span class="nav-number">8.</span> <span class="nav-text">第十一章-Servlet基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十二章-Ajax"><span class="nav-number">9.</span> <span class="nav-text">第十二章 - Ajax</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/liu.jpg"
+      alt="Liu">
+  <p class="site-author-name" itemprop="name">Liu</p>
+  <div class="site-description" itemprop="description">Rainbow after wind and rain</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/yourname" title="GitHub &rarr; https://github.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:LQL1026@gmail.com" title="E-Mail &rarr; mailto:LQL1026@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-liu"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">32k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">29 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.1
+  </div>
+
+
+  <% } %>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-miku"},"display":{"position":"right","width":140,"height":260},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+<!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
